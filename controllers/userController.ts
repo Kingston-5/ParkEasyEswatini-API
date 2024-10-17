@@ -10,7 +10,7 @@ dotenv.config();
 // @desc    Register new user
 // @route   POST /api/users
 // @access  Public
-const registerUser = asyncHandler(async (req: Request, res: Response) => {
+export const registerUser = asyncHandler(async (req: Request, res: Response) => {
   const { first_name, last_name, phone_number, email, password } = req.body
 
   if (!first_name || !last_name || !phone_number || !email || !password) {
@@ -57,7 +57,7 @@ const registerUser = asyncHandler(async (req: Request, res: Response) => {
 // @desc    Authenticate a user
 // @route   POST /api/users/login
 // @access  Public
-const loginUser = asyncHandler(async (req: Request, res: Response) => {
+export const loginUser = asyncHandler(async (req: Request, res: Response) => {
   const { email, phone_number, password } = req.body
 
   // Check for user email
@@ -81,10 +81,41 @@ if (user && (await bcrypt.compare(password, user.password))) {
 // @desc    Get user data
 // @route   GET /api/users/me
 // @access  Private
-const getMe = asyncHandler(async (req: any, res: Response) => {
+export const getMe = asyncHandler(async (req: any, res: Response) => {
   console.log(`=====================================\n${req}`);
   res.status(200).json({user:req.user});
 })
+
+// @desc    Update authenticated user
+// @route   PUT /api/users/:id
+// @access  Private
+export const updateUser = asyncHandler(async (req: any, res) => {
+  const user = await User.findById(req.params.id)
+
+  if (!user) {
+    res.status(400)
+    throw new Error('User not found')
+  }
+
+  // Check for user
+  if (!req.user) {
+    res.status(401)
+    throw new Error('User not found')
+  }
+
+  // Make sure the logged in user matches the user to be updated
+  if (user._id.toString() !== req.user.id) {
+    res.status(401)
+    throw new Error('User not authorized')
+  }
+
+  const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+  })
+
+  res.status(200).json(updatedUser)
+})
+
 
 // Generate JWT
 const generateToken = (id: any) => {
@@ -96,8 +127,3 @@ const generateToken = (id: any) => {
   })
 }
 
-module.exports = {
-  registerUser,
-  loginUser,
-  getMe,
-}

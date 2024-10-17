@@ -11,15 +11,7 @@ export const ParkingLot = mongoose.model('ParkingLot',
         type: String,
         required: [true, 'Please add an address'],
       },  
-      latitude: {
-        type: String,
-        required: [true, 'Please add latitude'],
-      },
-      longitude: {
-        type: String,
-        required: [true, 'Please add longitude'],
-      },
-       capacity: {
+      capacity: {
         type: String,
         required: [true, 'Please add capacity'],
       },

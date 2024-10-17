@@ -13,7 +13,7 @@ dotenv.config();
 const create = asyncHandler(async (req: Request, res: Response) => {
     const { name, address, latitude, longitude, capacity, hourly_rate, image } = req.body
 
-  if (!name ||  !address || !latitude || !longitude || !capacity || !hourly_rate || !image) {
+  if (!name ||  !address || !capacity || !hourly_rate || !image) {
     res.status(400)
     throw new Error('Please add all fields')
   }
@@ -30,8 +30,6 @@ const create = asyncHandler(async (req: Request, res: Response) => {
   const lot = await ParkingLot.create({
    name, 
    address, 
-   latitude, 
-   longitude, 
    capacity, 
    hourly_rate, 
    image 
@@ -42,8 +40,6 @@ const create = asyncHandler(async (req: Request, res: Response) => {
       _id: lot.id,
       name: lot.name, 
       address: lot.address, 
-      latitude: lot.latitude, 
-      longitude: lot.longitude, 
       capacity: lot.capacity, 
       hourly_rate: lot.hourly_rate, 
       image: lot.image
