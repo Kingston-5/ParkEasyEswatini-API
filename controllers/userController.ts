@@ -11,9 +11,9 @@ dotenv.config();
 // @route   POST /api/users
 // @access  Public
 const registerUser = asyncHandler(async (req: Request, res: Response) => {
-  const { name, email, password } = req.body
+  const { first_name, last_name, phone_number, email, password } = req.body
 
-  if (!name || !email || !password) {
+  if (!first_name || !last_name || !phone_number || !email || !password) {
     res.status(400)
     throw new Error('Please add all fields')
   }
@@ -32,7 +32,9 @@ const registerUser = asyncHandler(async (req: Request, res: Response) => {
 
   // Create user
   const user = await User.create({
-    name,
+    first_name,
+    last_name,
+    phone_number,
     email,
     password: hashedPassword,
   })
@@ -40,7 +42,9 @@ const registerUser = asyncHandler(async (req: Request, res: Response) => {
   if (user) {
     res.status(201).json({
       _id: user.id,
-      name: user.name,
+      first_name: user.first_name,
+      last_name: user.last_name,
+      phone_number: user.phone_number,
       email: user.email,
       token: generateToken(user._id),
     })
@@ -54,15 +58,17 @@ const registerUser = asyncHandler(async (req: Request, res: Response) => {
 // @route   POST /api/users/login
 // @access  Public
 const loginUser = asyncHandler(async (req: Request, res: Response) => {
-  const { email, password } = req.body
+  const { email, phone_number, password } = req.body
 
   // Check for user email
-  const user = await User.findOne({ email })
+  const user = await User.findOne({phone_number})
 
-  if (user && (await bcrypt.compare(password, user.password))) {
+if (user && (await bcrypt.compare(password, user.password))) {
     res.json({
-      _id: user.id,
-      name: user.name,
+       _id: user.id,
+      first_name: user.first_name,
+      last_name: user.last_name,
+      phone_number: user.phone_number,
       email: user.email,
       token: generateToken(user._id),
     })

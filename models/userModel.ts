@@ -5,11 +5,11 @@ export const User = mongoose.model('User',
     {
       first_name: {
         type: String,
-        required: [true, 'Please first name'],
+        required: [true, 'Please add first name'],
       },
       last_name: {
         type: String,
-        required: [true, 'Please first name'],
+        required: [true, 'Please add a last name'],
       },  
       email: {
         type: String,
