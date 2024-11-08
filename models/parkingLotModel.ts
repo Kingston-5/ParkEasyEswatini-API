@@ -1,32 +1,35 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
-export const ParkingLot = mongoose.model('ParkingLot', 
+export const ParkingLot = mongoose.model(
+  "ParkingLot",
   mongoose.Schema(
     {
       name: {
         type: String,
-        required: [true, 'Please add  name'],
+        required: [true, "Please add  name"],
       },
       address: {
         type: String,
-        required: [true, 'Please add an address'],
-      },  
+        required: [true, "Please add an address"],
+      },
       capacity: {
         type: String,
-        required: [true, 'Please add capacity'],
+        required: [true, "Please add capacity"],
       },
-       hourly_rate: {
+      hourly_rate: {
         type: String,
-        required: [true, 'Please add hourly rate'],
-        },
-        image : {
-          type: String,
-          image: [true, 'PLease add image'],
-          },
+        required: [true, "Please add hourly rate"],
+      },
+      coverImage: {
+        type: String,
+        image: [true, "PLease add image"],
+      },
+      parkingSpaces: [
+        { type: mongoose.Schema.Types.ObjectId, ref: "ParkingSpace" },
+      ],
     },
     {
       timestamps: true,
     }
   )
 );
-

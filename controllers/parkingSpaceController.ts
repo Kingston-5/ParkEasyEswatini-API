@@ -11,9 +11,9 @@ dotenv.config();
 // @route   POST /api/space/create
 // @access  Public
 export const create = asyncHandler(async (req: Request, res: Response) => {
-    const { parking_lot, latitude, longitude, type, state} = req.body
+    const { parkingLot, latitude, longitude, type, state} = req.body
 
-  if (!parking_lot || !latitude || !longitude || !type || !state) {
+  if (!parkingLot || !latitude || !longitude || !type || !state) {
     res.status(400)
     throw new Error('Please add all fields')
   }
@@ -28,7 +28,7 @@ export const create = asyncHandler(async (req: Request, res: Response) => {
 
   // Create parking lot
   const space = await ParkingSpace.create({
-  parking_lot,
+  parkingLot,
   latitude,
   longitude,
   type,
@@ -38,7 +38,7 @@ export const create = asyncHandler(async (req: Request, res: Response) => {
   if (space) {
     res.status(201).json({
       _id: space.id,
-      parking_lot: space.parking_lot,
+      parkingLot: space.parkingLot,
       latitude: space.latitude,
       longitude: space.longitude,
       type: space.type,

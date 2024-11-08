@@ -6,6 +6,7 @@ import { connectDB } from './config/db';
 import UserRouter from './routes/userRoutes';
 import ParkingLotRouter  from './routes/parkingLotRoutes';
 import ParkingSpaceRouter  from './routes/parkingSpaceRoutes';
+import ReservationRouter from './routes/reservationRoutes';
 
 //For env File 
 dotenv.config();
@@ -22,9 +23,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/api/users', UserRouter);
 app.use('/api/lots', ParkingLotRouter);
 app.use('/api/spaces', ParkingSpaceRouter);
+app.use('/api/reservations', ReservationRouter);
 
 app.get('/', (req: Request, res: Response) => {
-  res.send('Welcome to Express & TypeScript Server');
+  res.send('Welcome to Your Server');
 });
 
 

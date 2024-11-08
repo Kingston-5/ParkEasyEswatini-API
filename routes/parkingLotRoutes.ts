@@ -8,7 +8,7 @@ const {
 } = require('../controllers/parkingLotController')
 //const { protect } = require('../middleware/authMiddleware')
 
-ParkingLotRouter.post('/create', protect, create)
-ParkingLotRouter.get('/all', protect, getAll)
+ParkingLotRouter.post('/create',  create)
+ParkingLotRouter.get('/all',  getAll)
 
 export default ParkingLotRouter

@@ -11,8 +11,8 @@ import {
 
 //const { protect } = require('../middleware/authMiddleware')
 
-ParkingSpaceRouter.post('/create', protect, create)
-ParkingSpaceRouter.get('/all', protect, getAll)
-ParkingSpaceRouter.get('/:id', protect, getOne)
+ParkingSpaceRouter.post('/create', create)
+ParkingSpaceRouter.get('/all', getAll)
+ParkingSpaceRouter.get('/:id', getOne)
 
 export default ParkingSpaceRouter
